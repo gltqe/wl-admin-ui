@@ -1,0 +1,74 @@
+.layout-content {
+  height: 100%;
+  max-width: 100%;
+  //background-color: greenyellow;
+  //padding: 0px 10px 0px 10px;
+}
+
+// 表单label
+.el-form-item__label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+// 表头颜色
+//.el-table__header thead tr th {
+//  background-color: #f5f7fa !important; /* 设置你想要的背景颜色 */
+//}
+
+// 操作行
+.operate {
+  padding: 0px 0px 10px 0px;
+}
+
+// 分页
+.table-pagination {
+  padding: 20px 20px 20px 20px;
+  float: right;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.el-pagination > .is-first {
+  margin-left: 20px !important;
+}
+
+// 弹窗按钮
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+}
+
+// clearable 闪烁 超出问题
+.el-input__wrapper {
+  position: relative;
+
+  .el-input__inner {
+    padding-right: 18px;
+  }
+
+  .el-input__suffix {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+// 常规dialog中(1000宽度) 独占一行的input
+.dialog-row-input {
+  width: 850px;
+}
+
+// 描述列label
+.des-label {
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+// 操作列 操作按钮比较多的时候
+.operation-column {
+  display: flex!important;
+  justify-content: center!important;
+  align-items: center!important;
+}

@@ -1,0 +1,9 @@
+//$menu-background: #545c64;
+$menu-width:200px;
+$menu-width-collapse:64px;
+
+:export {
+  //menuBackground:$menu-background;
+  menuWidth:$menu-width;
+  menuWidthCollapse:$menu-width-collapse;
+}
