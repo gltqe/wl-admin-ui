@@ -6,8 +6,9 @@
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item :icon="exportType==='0'?'Select':''" @click="handleExportType('0')">当前分页</el-dropdown-item>
-        <el-dropdown-item :icon="exportType==='1'?'Select':''" @click="handleExportType('1')">查询结果（默认）</el-dropdown-item>
+        <el-dropdown-item :icon="exportType==='1'?'Select':''" @click="handleExportType('1')">查询结果</el-dropdown-item>
         <el-dropdown-item :icon="exportType==='2'?'Select':''" @click="handleExportType('2')">全部数据</el-dropdown-item>
+        <el-dropdown-item :icon="exportType==='3'?'Select':''" @click="handleExportType('3')">勾选数据</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -25,7 +26,7 @@ const props = defineProps({
   },
   showMsg:{
     type: Boolean,
-    default: false
+    default: true
   },
   label:{
     type: String,
@@ -48,11 +49,13 @@ const type = ref(props.exportType)
 
 const handleExportType = (val) => {
   if (val==='0'){
-    msg.value = '（当前分页）'
+    msg.value = '(当前分页)'
   }else if (val==='1'){
-    msg.value = '（查询结果）'
+    msg.value = '(查询结果)'
   }else if (val==='2'){
-    msg.value = '（全部数据）'
+    msg.value = '(全部数据)'
+  }else if (val==='3'){
+    msg.value = '(勾选数据)'
   }
   type.value = val
   emits('update:exportType', val);
@@ -60,8 +63,27 @@ const handleExportType = (val) => {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .dropdown {
   margin-left: 12px;
 }
+:deep(.el-dropdown-menu__item) {
+  display: flex;
+  align-items: flex-end; /* 垂直居中对齐 */
+}
+
+/* 为每个下拉项添加一个占位符，除非它已经有图标 */
+:deep(.el-dropdown-menu__item:not(:has(>.el-icon))::before) {
+  content: '';
+  display: inline-block;
+  width: 1em; /* 根据你的图标宽度调整 */
+  height: 1em; /* 与文本行高相同 */
+  margin-right: 8px; /* 根据需要调整 */
+}
+
+/* 设置图标的样式 */
+:deep(.el-dropdown-menu__item .el-icon) {
+  margin-right: 8px; /* 在图标和文本之间添加一些空间 */
+}
+
 </style>

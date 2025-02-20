@@ -494,7 +494,7 @@ const handleDelete = (row) => {
 
   })
 }
-
+// 导出
 const handleExport = () => {
   loading.value = true
   // queryForm.value.exportType = '0'
@@ -512,6 +512,8 @@ const handleExport = () => {
     downloadElement.click()
     document.body.removeChild(downloadElement)
     window.URL.revokeObjectURL(href)
+    loading.value = false
+  }).catch(()=>{
     loading.value = false
   })
 }

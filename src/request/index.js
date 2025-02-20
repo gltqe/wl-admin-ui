@@ -74,10 +74,8 @@ instance.interceptors.response.use(
         } else if (code === 1001) {
             // token过期
             let refreshData = {refreshToken: localStorage.getItem(REFRESH_HEAD)}
-            // 这里如果用request会重复调用
             return refreshToken(refreshData).then(res => {
                 if (res.data.code === 1001) {
-                    // todo  query: { redirect: router.currentRoute.fullPath }
                     router.push({path: '/login'}).then(res => {
                         ElMessage.warning('太久没有登录,请重新登录')
                     })
