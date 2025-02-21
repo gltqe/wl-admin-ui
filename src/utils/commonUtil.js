@@ -11,6 +11,41 @@ export function handleResult(res) {
     }
 }
 
+export function handleExportResult(res) {
+    const contentType = res.headers['content-type']
+    if (contentType && contentType.includes('application/json')) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            try {
+                if (typeof event.target.result === 'string') {
+                    const jsonData = JSON.parse(event.target.result);
+                    ElMessage.error(jsonData.msg); // 假设 JSON 对象中有一个 msg 属性
+                } else {
+                    console.error('数据类型异常:', typeof event.target.result);
+                }
+            } catch (error) {
+                console.error('json解析异常:', error);
+            }
+        };
+        // 读取 Blob 作为文本
+        reader.readAsText(res.data);
+    } else {
+        const blob = new Blob([res.data])
+        const downloadElement = document.createElement('a')
+        // 创建下载链接
+        const href = window.URL.createObjectURL(blob)
+        downloadElement.href = href
+        const fileNameCode = res.headers['content-disposition'].split('filename=')[1]
+        // 下载后文件名
+        downloadElement.download = decodeURIComponent(fileNameCode)
+        document.body.appendChild(downloadElement)
+        // 点击下载
+        downloadElement.click()
+        document.body.removeChild(downloadElement)
+        window.URL.revokeObjectURL(href)
+    }
+}
+
 // 获取行 指定字段
 export function getTableRadioParam(row, list, name) {
     if (row && row[name]) {
@@ -21,7 +56,7 @@ export function getTableRadioParam(row, list, name) {
     }
 }
 
-// 获取多行 指定字段
+// 获取多行 指定字段 (有单行的只返回单行的指定字段)
 export function getCheckboxParam(row, list, name) {
     let r = []
     if (row && row[name]) {
@@ -79,6 +114,6 @@ export function getDateTimeOfRange(obj) {
 // 不是null添加进formData
 export function isNotNullAppend(formData, key, value) {
     if (value && value !== null && value !== '') {
-        formData.append(key,value)
+        formData.append(key, value)
     }
 }

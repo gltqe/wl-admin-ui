@@ -59,7 +59,8 @@
       <!--                 @click="handleExport">导出-->
       <!--      </el-button>-->
 
-      <wl-export-button size="small" v-model:export-type="queryForm.exportType" @click="handleExport"></wl-export-button>
+      <wl-export-button size="small" v-model:export-type="queryForm.exportType"
+                        @click="handleExport"></wl-export-button>
     </el-row>
 
     <el-table
@@ -224,7 +225,14 @@ import {getDeptByUser} from "@/api/system/dept.js";
 import {add, exportUser, getOne, page, remove, update} from "@/api/system/user.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {getPositionList} from "@/api/system/position.js";
-import {getCheckboxParam, getDictMap, getTableRadioParam, handleResult, isNotNullAppend} from "@/utils/commonUtil.js";
+import {
+  getCheckboxParam,
+  getDictMap,
+  getTableRadioParam,
+  handleExportResult,
+  handleResult,
+  isNotNullAppend
+} from "@/utils/commonUtil.js";
 import AvatarUpload from "@/components/upload/avatarUpload.vue";
 import WlCheckbox from "@/components/checkbox/wlCheckbox.vue";
 import {getRoleByUser} from "@/api/system/role.js";
@@ -330,8 +338,11 @@ const handleTableData = () => {
       ElMessage.error(res.data.msg)
     }
     loading.value = false
+  }).catch(() => {
+    loading.value = false
   })
 }
+
 // 表 当前选中的数据
 const selectionChange = (selection) => {
   selectData.value = selection
@@ -344,10 +355,12 @@ const sortChange = ({column, prop, order}) => {
   queryForm.value.isAsc = order === 'ascending'
   handleTableData()
 }
+
 // 修改分页size参数
 const handleSizeChange = (number) => {
 
 }
+
 // 修改分页currentPage参数
 const handleCurrentChange = (number) => {
 
@@ -369,7 +382,7 @@ const handleUpdate = (row) => {
     if (res.data.code === 200) {
       form.value = res.data.data
       formDialog.value.visible = true
-    }else {
+    } else {
       ElMessage.error(res.data.msg)
     }
   })
@@ -379,7 +392,6 @@ const handleUpdate = (row) => {
 const cancel = () => {
   formDialog.value.visible = false
 }
-
 
 // 关闭弹窗
 const handleCloseDialog = (done) => {
@@ -412,6 +424,7 @@ const handlePositionList = () => {
   })
 
 }
+
 // 获取角色信息
 const handleRoleList = () => {
   return new Promise((resolve, reject) => {
@@ -494,26 +507,15 @@ const handleDelete = (row) => {
 
   })
 }
+
 // 导出
 const handleExport = () => {
   loading.value = true
-  // queryForm.value.exportType = '0'
+  queryForm.value.ids = getCheckboxParam(undefined, selectData.value, 'id')
   exportUser(queryForm.value).then(res => {
-    const blob = new Blob([res.data])
-    const downloadElement = document.createElement('a')
-    // 创建下载链接
-    const href = window.URL.createObjectURL(blob)
-    downloadElement.href = href
-    const fileNameCode = res.headers['content-disposition'].split('filename=')[1]
-    // 下载后文件名
-    downloadElement.download = decodeURIComponent(fileNameCode)
-    document.body.appendChild(downloadElement)
-    // 点击下载
-    downloadElement.click()
-    document.body.removeChild(downloadElement)
-    window.URL.revokeObjectURL(href)
+    handleExportResult(res);
     loading.value = false
-  }).catch(()=>{
+  }).catch(() => {
     loading.value = false
   })
 }
