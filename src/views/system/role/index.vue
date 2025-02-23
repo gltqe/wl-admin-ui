@@ -34,7 +34,6 @@
                  :disabled="!isSelect">删除
       </el-button>
       <el-button plain size="small" icon="Upload" type="info" v-permission="'role:list:import'">导入</el-button>
-      <el-button plain size="small" icon="Download" type="success" v-permission="'role:list:export'">导出</el-button>
     </el-row>
 
     <el-table

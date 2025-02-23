@@ -87,3 +87,13 @@ export function updateSelf (formData) {
     data: formData
   })
 }
+
+// 导出
+export function exportPosition (formData) {
+  return request({
+    url: 'sysPosition/exportPosition',
+    method: 'post',
+    data: formData,
+    responseType: 'blob'
+  })
+}

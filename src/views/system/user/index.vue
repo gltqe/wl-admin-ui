@@ -59,7 +59,7 @@
       <!--                 @click="handleExport">导出-->
       <!--      </el-button>-->
 
-      <wl-export-button size="small" v-model:export-type="queryForm.exportType"
+      <wl-export-button size="small" v-model:export-type="queryForm.exportType" :support-type="[0,1,2,3]"
                         @click="handleExport"></wl-export-button>
     </el-row>
 
@@ -248,7 +248,7 @@ const queryForm = ref({
   pageSize: 10,
   isAsc: false,
   sortField: '',
-  exportType: '1'
+  exportType: 2
 })
 const queryFormRef = ref()
 const deptTree = ref([])

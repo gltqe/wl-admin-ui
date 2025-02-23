@@ -19,18 +19,23 @@
         </el-form-item>
         <el-form-item>
           <el-button icon="Search" type="primary" @click="handleTableData">搜索</el-button>
-          <el-button icon="Refresh" type="default" @click="resetForm(queryFormRef)">重置</el-button>
+          <el-button icon="Refresh" @click="resetForm(queryFormRef)">重置</el-button>
         </el-form-item>
       </el-form>
     </el-row>
     <el-row class="operate">
-      <el-button plain size="small" icon="Plus" type="primary" v-permission="'position:list:add'" @click="handleAdd">新增</el-button>
-      <el-button plain size="small" icon="Edit" type="warning" v-permission="'position:list:update'" @click="handleUpdate" :disabled="!isRadio">修改
+      <el-button plain size="small" icon="Plus" type="primary" v-permission="'position:list:add'" @click="handleAdd">
+        新增
       </el-button>
-      <el-button plain size="small" icon="Delete" type="danger" v-permission="'position:list:remove'" @click="handleDelete" :disabled="!isSelect">删除
+      <el-button plain size="small" icon="Edit" type="warning" v-permission="'position:list:update'"
+                 @click="handleUpdate" :disabled="!isRadio">修改
+      </el-button>
+      <el-button plain size="small" icon="Delete" type="danger" v-permission="'position:list:remove'"
+                 @click="handleDelete" :disabled="!isSelect">删除
       </el-button>
       <el-button plain size="small" icon="Upload" type="info" v-permission="'position:list:import'">导入</el-button>
-      <el-button plain size="small" icon="Download" type="success" v-permission="'position:list:export'">导出</el-button>
+      <wl-export-button size="small" v-model:export-type="queryForm.exportType" :support-type="[0,1,2,3]"
+                        @click="handleExport"></wl-export-button>
     </el-row>
 
     <el-table
@@ -136,18 +141,27 @@
 
 <script setup name="PositionInfo">
 import {onMounted, ref} from "vue";
-import {page, getOne, remove, add, update} from "@/api/system/position.js";
+import {add, exportPosition, getOne, page, remove, update} from "@/api/system/position.js";
 import {ElMessage, ElMessageBox} from "element-plus";
-import {handleResult, getCheckboxParam, getTableRadioParam, getDictMap} from "@/utils/commonUtil.js";
+import {
+  getCheckboxParam,
+  getDictMap,
+  getTableRadioParam,
+  handleExportResult,
+  handleResult
+} from "@/utils/commonUtil.js";
 
 import WlSelect from "@/components/select/wlSelect.vue";
+import WlExportButton from "@/components/button/wlExportButton.vue";
+
 const {sys_status} = getDictMap('sys_status')
 const loading = ref(false)
 const queryForm = ref({
   currentPage: 1,
   pageSize: 10,
   isAsc: false,
-  sortField: ''
+  sortField: '',
+  exportType: 1
 })
 const queryFormRef = ref()
 const tableData = ref([])
@@ -302,6 +316,18 @@ const handleDelete = (row) => {
     })
   }).catch(() => {
 
+  })
+}
+
+// 导出
+const handleExport = () => {
+  loading.value = true
+  queryForm.value.ids = getCheckboxParam(undefined, selectData.value, 'id')
+  exportPosition(queryForm.value).then(res => {
+    handleExportResult(res);
+    loading.value = false
+  }).catch(() => {
+    loading.value = false
   })
 }
 
