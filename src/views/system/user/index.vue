@@ -248,7 +248,7 @@ const queryForm = ref({
   pageSize: 10,
   isAsc: false,
   sortField: '',
-  exportType: 2
+  exportType: 1
 })
 const queryFormRef = ref()
 const deptTree = ref([])
