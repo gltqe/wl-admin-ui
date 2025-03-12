@@ -20,6 +20,8 @@ import store from './stores'
 import ElementIcons from './assets/icons/el-icons.js'
 // 引入鉴权命令
 import Permission from "@/directives/permission.js";
+// 引入loading命令
+import Loading from '@/directives/loading'
 // 引入全局样式
 import './assets/style/index.scss'
 // 引入 vite-plugin-svg-icons
@@ -32,7 +34,6 @@ import WlRadio from "@/components/radio/wlRadio.vue";
 import WlDict from "@/components/dict/wlDict.vue"
 
 
-
 const app = createApp(App)
 
 
@@ -40,13 +41,15 @@ app.use(store)
 app.use(router)
 app.use(ElementPlus, {locale: zhCn,})
 app.use(ElementIcons)
+// 注册loading命令 区别原本的 v-loading
+app.directive('wl-loading', Loading)
 // 注册权限命令
 app.directive('permission', Permission)
 // 注册全局组件
 app.component('wl-icon', WlIcon);
 app.component('wl-select', WlSelect);
-app.component('wl-checkbox',WlCheckbox);
-app.component('wl-radio',WlRadio);
-app.component('wl-dict',WlDict);
+app.component('wl-checkbox', WlCheckbox);
+app.component('wl-radio', WlRadio);
+app.component('wl-dict', WlDict);
 
 app.mount('#app')

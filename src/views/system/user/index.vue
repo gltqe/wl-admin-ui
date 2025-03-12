@@ -66,7 +66,7 @@
     <el-table
         class="tableList"
         :data="tableData"
-        v-loading="loading"
+        v-wl-loading="loading"
         @selection-change="selectionChange"
         @sort-change="sortChange"
     >
