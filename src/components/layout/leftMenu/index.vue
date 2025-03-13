@@ -53,7 +53,14 @@ tagStore.addTag(route)
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/style/globa.scss";
+$menu-width:200px;
+$menu-width-collapse:64px;
+
+:export {
+  //menuBackground:$menu-background;
+  menuWidth:$menu-width;
+  menuWidthCollapse:$menu-width-collapse;
+}
 
 .scrollbar {
   //background: v-bind('menuBackground');

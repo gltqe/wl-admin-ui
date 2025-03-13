@@ -11,6 +11,8 @@ import 'element-plus/theme-chalk/display.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 // 暗夜模式
 import 'element-plus/theme-chalk/dark/css-vars.css'
+// 引入部分自定义样式
+import './assets/style/index.scss'
 
 
 
@@ -22,8 +24,7 @@ import ElementIcons from './assets/icons/el-icons.js'
 import Permission from "@/directives/permission.js";
 // 引入loading命令
 import Loading from '@/directives/loading'
-// 引入全局样式
-import './assets/style/index.scss'
+
 // 引入 vite-plugin-svg-icons
 import 'virtual:svg-icons-register'
 // 引入全局组件

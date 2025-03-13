@@ -72,3 +72,9 @@
   justify-content: center!important;
   align-items: center!important;
 }
+
+/* 暗黑模式容器 */
+.dark .el-container > * {
+  border-bottom: 1px solid var(--el-border-color);
+  box-sizing: border-box;
+}

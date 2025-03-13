@@ -25,9 +25,13 @@ const menuStore = useMenuStore()
 </script>
 
 <style lang="scss" scoped>
+
 .container {
   height: 100vh;
   width: 100vw;
+  .left-menu{
+    box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.1);
+  }
 
   .top-header {
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
