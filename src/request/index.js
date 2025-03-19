@@ -26,6 +26,11 @@ const instance = axios.create()
 // 设置请求超时时间  或 单个请求 在请求参数中直接添加 timeout:xxx  值为0 即永不超时
 instance.defaults.timeout = 10000
 
+// 是否正在刷新 Token
+let isRefreshing = false;
+// 挂起的请求队列
+let requests = [];
+
 // 请求拦截器
 instance.interceptors.request.use(
     config => {
@@ -74,25 +79,45 @@ instance.interceptors.response.use(
         } else if (code === 1001) {
             // token过期
             let refreshData = {refreshToken: localStorage.getItem(REFRESH_HEAD)}
-            return refreshToken(refreshData).then(res => {
-                if (res.data.code === 1001) {
-                    router.push({path: '/login'}).then(res => {
-                        ElMessage.warning('太久没有登录,请重新登录')
-                    })
-                } else {
-                    if (res.data.code === 200) {
-                        localStorage.setItem(ACCESS_HEAD, res.data.data)
-                        // 重发请求
-                        response.config.url = response.config.url.replace(baseUrl, '')
-                        return instance(response.config)
-                    } else {
-                        // 刷新失败
-                        router.push('/login').then(res => {
-                            ElMessage.warning('token异常,请重新登录')
+            if (!isRefreshing) {
+                isRefreshing = true;
+                return refreshToken(refreshData).then(res => {
+                    if (res.data.code === 1001) {
+                        router.push({path: '/login'}).then(res => {
+                            ElMessage.warning('太久没有登录,请重新登录')
                         })
+                    } else {
+                        if (res.data.code === 200) {
+                            localStorage.setItem(ACCESS_HEAD, res.data.data)
+                            // 重发请求
+                            response.config.url = response.config.url.replace(baseUrl, '')
+                            if (requests.length > 0) {
+                                // 执行挂起的请求
+                                requests.forEach(cb => cb());
+                                requests = [];
+                            }
+                            // 执行当前请求
+                            return instance(response.config)
+                        } else {
+                            // 刷新失败
+                            router.push('/login').then(res => {
+                                ElMessage.warning('token异常,请重新登录')
+                            })
+                        }
                     }
-                }
-            })
+                }).finally(() => {
+                    isRefreshing = false;
+                    requests = [];
+                })
+            } else {
+                // 挂起其他请求
+                return new Promise(resolve => {
+                    requests.push(() => {
+                        response.config.url = response.config.url.replace(baseUrl, '')
+                        resolve(instance(response.config));
+                    });
+                });
+            }
         } else if (code === 403) {
             ElMessage.error(msg)
             return Promise.reject(new Error(msg))

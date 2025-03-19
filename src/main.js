@@ -6,11 +6,11 @@ import App from './App.vue'
 import router from './router'
 // 引入element-plus
 import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import 'element-plus/theme-chalk/display.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+// 引入element-plus样式
+import './assets/style/global.scss'
 // 暗夜模式
-import 'element-plus/theme-chalk/dark/css-vars.css'
+import './assets/style/global-dark.scss'
 // 引入部分自定义样式
 import './assets/style/index.scss'
 

@@ -188,7 +188,9 @@ onMounted(() => {
 const handleTableData = () => {
   loading.value = true
   page(queryForm.value).then(res => {
-    if (res.data.code == 200) {
+    console.log('res')
+    console.log(res)
+    if (res.data.code === 200) {
       tableData.value = res.data.data.records
       total.value = res.data.data.total
     } else {

@@ -68,13 +68,24 @@
 
 // 操作列 操作按钮比较多的时候
 .operation-column {
-  display: flex!important;
-  justify-content: center!important;
-  align-items: center!important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
-/* 暗黑模式容器 */
+// 暗黑模式 增加分割线
 .dark .el-container > * {
   border-bottom: 1px solid var(--el-border-color);
   box-sizing: border-box;
+}
+
+// 修改表头颜色
+.el-table th{
+  color: #5b5858;
+}
+.el-table .sort-caret.ascending {
+  border-bottom-color: #5b5858;
+}
+.el-table .sort-caret.descending {
+  border-top-color: #5b5858;
 }
