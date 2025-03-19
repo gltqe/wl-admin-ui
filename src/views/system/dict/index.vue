@@ -36,7 +36,7 @@
     <el-table
         class="tableList"
         :data="tableData"
-        v-loading="loading"
+        v-wl-loading="loading"
         @selection-change="selectionChange"
         @sort-change="sortChange"
     >
@@ -188,8 +188,6 @@ onMounted(() => {
 const handleTableData = () => {
   loading.value = true
   page(queryForm.value).then(res => {
-    console.log('res')
-    console.log(res)
     if (res.data.code === 200) {
       tableData.value = res.data.data.records
       total.value = res.data.data.total

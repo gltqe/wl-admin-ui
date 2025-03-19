@@ -43,7 +43,7 @@ defineExpose({
 <style scoped>
 .loading-container {
   position: absolute;
-  top: -25%;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -58,6 +58,7 @@ defineExpose({
   display: flex;
   align-items: center;
   height: 100px;
+  margin-top: -5%;
 }
 
 .box {

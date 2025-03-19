@@ -38,7 +38,7 @@
         class="tableList"
         ref="tableRef"
         :data="tableData"
-        v-loading="loading"
+        v-wl-loading="loading"
         @selection-change="selectionChange"
         @sort-change="sortChange"
         row-key="id"
