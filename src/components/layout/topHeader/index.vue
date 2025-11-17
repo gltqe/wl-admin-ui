@@ -2,11 +2,13 @@
   <el-header class="header">
     <div class="header-left">
       <el-icon class="hidden-xs-only menu-collapse-icon" size="22" @click="menuStore.collapseMenu">
+<!--        {{ menuStore.menuCollapse }}-->
         <Expand v-if="!menuStore.menuCollapse"/>
         <Fold v-if="menuStore.menuCollapse"/>
       </el-icon>
       <el-icon class="hidden-sm-and-up menu-collapse-icon" size="22" @click="menuStore.activeMenu">
-        <!--      <Expand v-if="menuStore.menuActive"/>-->
+<!--        {{ menuStore.menuActive }}-->
+        <Expand v-if="menuStore.menuActive"/>
         <Fold v-if="!menuStore.menuActive"/>
       </el-icon>
       <el-breadcrumb class="breadcrumb" separator-icon="ArrowRight">

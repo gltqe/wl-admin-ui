@@ -13,6 +13,8 @@ import './assets/style/global.scss'
 import './assets/style/global-dark.scss'
 // 引入部分自定义样式
 import './assets/style/index.scss'
+// 引入element-plus响应式工具类
+import 'element-plus/theme-chalk/display.css'
 
 
 
