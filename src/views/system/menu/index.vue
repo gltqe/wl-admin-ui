@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div class="layout-content" v-wl-loading="loading">
     <el-row class="search">
       <el-form
           ref="queryFormRef"
@@ -38,7 +38,6 @@
         class="tableList"
         ref="tableRef"
         :data="tableData"
-        v-wl-loading="loading"
         @selection-change="selectionChange"
         @sort-change="sortChange"
         row-key="id"

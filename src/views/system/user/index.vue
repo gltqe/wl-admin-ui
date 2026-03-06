@@ -1,12 +1,11 @@
 <template>
-  <div class="layout-content">
+  <div class="layout-content" v-wl-loading="loading">
     <el-row class="search">
       <el-form
           ref="queryFormRef"
           :model="queryForm"
           :inline="true"
           label-width="60px"
-
       >
         <el-form-item label="姓名" prop="cnName">
           <el-input v-model="queryForm.cnName" clearable placeholder="请输入姓名"></el-input>
@@ -59,14 +58,13 @@
       <!--                 @click="handleExport">导出-->
       <!--      </el-button>-->
 
-      <wl-export-button size="small" v-model:export-type="queryForm.exportType" :support-type="[0,1,2,3]"
+      <wl-export-button size="small" v-model:export-type="queryForm.exportType" :support-type="['current', 'query', 'all', 'select']"
                         @click="handleExport"></wl-export-button>
     </el-row>
 
     <el-table
         class="tableList"
         :data="tableData"
-        v-wl-loading="loading"
         @selection-change="selectionChange"
         @sort-change="sortChange"
     >
@@ -248,7 +246,7 @@ const queryForm = ref({
   pageSize: 10,
   isAsc: false,
   sortField: '',
-  exportType: 1
+  exportType: 'query'
 })
 const queryFormRef = ref()
 const deptTree = ref([])

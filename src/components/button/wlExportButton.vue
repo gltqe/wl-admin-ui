@@ -5,16 +5,20 @@
     </el-icon>&nbsp;{{ label }}<span v-if="showMsg">{{ msg }}</span>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item v-if="supportType.includes(0)" :icon="exportType===0?'Select':''" @click="handleExportType(0)">
+        <el-dropdown-item v-if="supportType.includes('current')" :icon="exportType==='current'?'Select':''"
+                          @click="handleExportType('current')">
           当前分页
         </el-dropdown-item>
-        <el-dropdown-item v-if="supportType.includes(1)" :icon="exportType===1?'Select':''" @click="handleExportType(1)">
+        <el-dropdown-item v-if="supportType.includes('query')" :icon="exportType==='query'?'Select':''"
+                          @click="handleExportType('query')">
           查询结果
         </el-dropdown-item>
-        <el-dropdown-item v-if="supportType.includes(2)" :icon="exportType===2?'Select':''" @click="handleExportType(2)">
+        <el-dropdown-item v-if="supportType.includes('all')" :icon="exportType==='all'?'Select':''"
+                          @click="handleExportType('all')">
           全部数据
         </el-dropdown-item>
-        <el-dropdown-item v-if="supportType.includes(3)" :icon="exportType===3?'Select':''" @click="handleExportType(3)">
+        <el-dropdown-item v-if="supportType.includes('select')" :icon="exportType==='select'?'Select':''"
+                          @click="handleExportType('select')">
           勾选数据
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -30,12 +34,12 @@ const props = defineProps({
   supportType: {
     type: Array,
     required: false,
-    default: () => [0, 1, 2, 3]
+    default: () => ['current', 'query', 'all', 'select']
   },
   exportType: {
-    type: Number,
+    type: String,
     required: true,
-    default: 1,
+    default: 'query',
     validator(value, props) {
       return props.supportType.includes(value)
     }
@@ -56,7 +60,7 @@ const msg = ref('')
 
 // 更新父组件的值
 if (!props.exportType) {
-  emits('update:exportType', 1);
+  emits('update:exportType', 'query');
 }
 
 
@@ -64,13 +68,13 @@ const type = ref(props.exportType)
 
 
 const handleExportType = (val) => {
-  if (val === 0) {
+  if (val === 'current') {
     msg.value = '(当前分页)'
-  } else if (val === 1) {
+  } else if (val === 'query') {
     msg.value = '(查询结果)'
-  } else if (val === 2) {
+  } else if (val === 'all') {
     msg.value = '(全部数据)'
-  } else if (val === 3) {
+  } else if (val === 'select') {
     msg.value = '(勾选数据)'
   }
   type.value = val

@@ -34,7 +34,7 @@
                  @click="handleDelete" :disabled="!isSelect">删除
       </el-button>
       <el-button plain size="small" icon="Upload" type="info" v-permission="'position:list:import'">导入</el-button>
-      <wl-export-button size="small" v-model:export-type="queryForm.exportType" :support-type="[0,1,2,3]"
+      <wl-export-button size="small" v-model:export-type="queryForm.exportType" :support-type="['current', 'query', 'all', 'select']"
                         @click="handleExport"></wl-export-button>
     </el-row>
 
@@ -161,7 +161,7 @@ const queryForm = ref({
   pageSize: 10,
   isAsc: false,
   sortField: '',
-  exportType: 1
+  exportType: 'query'
 })
 const queryFormRef = ref()
 const tableData = ref([])

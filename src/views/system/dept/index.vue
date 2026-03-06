@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div class="layout-content" v-wl-loading="loading">
     <el-row class="search">
       <el-form
           ref="queryFormRef"
@@ -25,10 +25,13 @@
       </el-form>
     </el-row>
     <el-row class="operate">
-      <el-button plain size="small" icon="Plus" type="primary" v-permission="'dept:list:add'" @click="handleAdd">新增</el-button>
-      <el-button plain size="small" icon="Edit" type="warning" v-permission="'dept:list:update'" @click="handleUpdate" :disabled="!isRadio">修改
+      <el-button plain size="small" icon="Plus" type="primary" v-permission="'dept:list:add'" @click="handleAdd">新增
       </el-button>
-      <el-button plain size="small" icon="Delete" type="danger" v-permission="'dept:list:remove'" @click="handleDelete" :disabled="!isSelect">删除
+      <el-button plain size="small" icon="Edit" type="warning" v-permission="'dept:list:update'" @click="handleUpdate"
+                 :disabled="!isRadio">修改
+      </el-button>
+      <el-button plain size="small" icon="Delete" type="danger" v-permission="'dept:list:remove'" @click="handleDelete"
+                 :disabled="!isSelect">删除
       </el-button>
       <el-button plain size="small" icon="Expand" type="info" @click="handleExpandAll">展开/折叠</el-button>
     </el-row>
@@ -38,7 +41,6 @@
         class="tableList"
         ref="tableRef"
         :data="tableData"
-        v-wl-loading="loading"
         @selection-change="selectionChange"
         @sort-change="sortChange"
         row-key="id"
@@ -58,8 +60,12 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" v-permission="'dept:list:update'" @click="handleUpdate(scope.row)">修改</el-button>
-          <el-button link type="primary" icon="Delete" v-permission="'dept:list:remove'" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button link type="primary" icon="Edit" v-permission="'dept:list:update'" @click="handleUpdate(scope.row)">
+            修改
+          </el-button>
+          <el-button link type="primary" icon="Delete" v-permission="'dept:list:remove'"
+                     @click="handleDelete(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
